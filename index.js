@@ -3,7 +3,7 @@ import { getDatabase, ref, push, onValue, remove, set } from "https://www.gstati
 
 // Firebase configuration
 const firebaseConfig = {
-  databaseURL: process.env.ROAD_WALLET_DB
+  databaseURL: "https://roadwallet-73e92-default-rtdb.firebaseio.com"
 };
 
 // Initialize Firebase App and Database Reference

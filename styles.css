@@ -1,0 +1,506 @@
+/* ===============================
+   RoadWallet Modern UI Theme
+================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #667eea,
+            #764ba2
+        );
+
+    min-height:100vh;
+
+    margin:0;
+
+    padding:30px;
+
+    color:#333;
+
+}
+
+
+
+/* Header */
+
+h1 {
+
+    text-align:center;
+
+    color:white;
+
+    font-size:42px;
+
+    margin-bottom:5px;
+
+    letter-spacing:1px;
+
+}
+
+
+h2 {
+
+    text-align:center;
+
+    color:#f1f1f1;
+
+    font-weight:400;
+
+    margin-top:0;
+
+}
+
+
+
+
+
+/* Main container */
+
+
+.container {
+
+    max-width:950px;
+
+    margin:auto;
+
+}
+
+
+
+
+
+/* Cards */
+
+section {
+
+    background:white;
+
+    padding:25px;
+
+    margin:25px 0;
+
+    border-radius:20px;
+
+
+    box-shadow:
+
+    0 15px 35px rgba(0,0,0,0.15);
+
+
+    transition:.3s;
+
+}
+
+
+section:hover {
+
+    transform:translateY(-3px);
+
+}
+
+
+
+
+h3 {
+
+    margin-top:0;
+
+    color:#4b3f72;
+
+    font-size:22px;
+
+    border-bottom:
+
+    2px solid #eee;
+
+    padding-bottom:10px;
+
+}
+
+
+
+
+
+/* Forms */
+
+
+form {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    align-items:center;
+
+}
+
+
+
+input,
+select {
+
+
+    flex:1;
+
+    min-width:180px;
+
+
+    padding:14px;
+
+
+    border-radius:12px;
+
+
+    border:
+
+    1px solid #ddd;
+
+
+    font-size:15px;
+
+
+    outline:none;
+
+
+    transition:.2s;
+
+}
+
+
+
+input:focus,
+select:focus {
+
+
+    border-color:#667eea;
+
+
+    box-shadow:
+
+    0 0 8px rgba(102,126,234,.3);
+
+}
+
+
+
+
+/* Buttons */
+
+
+button {
+
+
+    padding:13px 22px;
+
+
+    border:none;
+
+
+    border-radius:12px;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #667eea,
+        #764ba2
+    );
+
+
+    color:white;
+
+
+    font-size:15px;
+
+
+    font-weight:600;
+
+
+    cursor:pointer;
+
+
+    transition:.25s;
+
+}
+
+
+
+button:hover {
+
+
+    transform:scale(1.05);
+
+
+    box-shadow:
+
+    0 8px 18px rgba(102,126,234,.35);
+
+}
+
+
+
+
+
+/* Total expense */
+
+
+#total-expenses-amount {
+
+
+    color:#667eea;
+
+
+    font-size:26px;
+
+
+    font-weight:bold;
+
+}
+
+
+
+
+
+/* Lists */
+
+
+ul {
+
+    padding:0;
+
+}
+
+
+
+
+li {
+
+
+    list-style:none;
+
+
+    background:#f7f8ff;
+
+
+    margin:12px 0;
+
+
+    padding:15px;
+
+
+    border-radius:14px;
+
+
+    display:flex;
+
+
+    justify-content:space-between;
+
+
+    align-items:center;
+
+
+    box-shadow:
+
+    0 3px 10px rgba(0,0,0,.05);
+
+
+}
+
+
+
+
+
+/* Traveler cards */
+
+
+.traveler-item {
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #fdfbfb,
+        #ebedee
+    );
+
+
+    padding:18px;
+
+
+    margin:12px 0;
+
+
+    border-radius:16px;
+
+
+    border-left:
+
+    6px solid #667eea;
+
+
+    line-height:1.8;
+
+
+    font-size:16px;
+
+
+}
+
+
+
+
+
+/* Balance colors */
+
+
+.balance-positive {
+
+
+    color:#16a34a;
+
+
+    font-weight:bold;
+
+
+}
+
+
+.balance-negative {
+
+
+    color:#dc2626;
+
+
+    font-weight:bold;
+
+
+}
+
+
+
+
+
+/* Delete button */
+
+
+.delete {
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #ff416c,
+        #ff4b2b
+    );
+
+
+    padding:8px 12px;
+
+
+    margin-left:15px;
+
+
+    font-size:14px;
+
+}
+
+
+.delete:hover {
+
+
+    box-shadow:
+
+    0 5px 15px rgba(255,65,108,.4);
+
+}
+
+
+
+
+
+/* Settlement section */
+
+
+#settlement-list li {
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #e0f7fa,
+        #e8f5e9
+    );
+
+
+    font-weight:600;
+
+
+    color:#065f46;
+
+
+}
+
+
+
+
+
+/* Mobile optimization */
+
+
+@media(max-width:700px){
+
+
+body {
+
+    padding:15px;
+
+}
+
+
+h1 {
+
+    font-size:32px;
+
+}
+
+
+form {
+
+    flex-direction:column;
+
+}
+
+
+input,
+select,
+button {
+
+    width:100%;
+
+}
+
+
+section {
+
+    padding:18px;
+
+}
+
+
+}

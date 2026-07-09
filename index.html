@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RoadWallet Expense Splitter</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script type="module" src="script.js"></script>
+</head>
+
+
+<body>
+
+<h1>🚗 RoadWallet</h1>
+<h2>Road Trip Expense Splitter</h2>
+
+
+<div class="container">
+
+
+<!-- Add Expense -->
+
+<section>
+
+<h3>Add Expense</h3>
+
+<form id="expense-form">
+
+<input 
+id="expense-category"
+placeholder="Expense category"
+required>
+
+
+<input 
+id="expense-amount"
+type="number"
+placeholder="Amount"
+required>
+
+
+<select id="expense-paid-by">
+<option value="">Paid By</option>
+</select>
+
+
+<button>
+Add Expense
+</button>
+
+</form>
+
+
+<h3>
+Total Expenses:
+<span id="total-expenses-amount">$0</span>
+</h3>
+
+
+<ul id="expense-list"></ul>
+
+
+</section>
+
+
+
+
+
+<!-- Travelers -->
+
+<section>
+
+<h3>Travelers</h3>
+
+
+<form id="travelers-form">
+
+<input
+id="traveler-name"
+placeholder="Traveler name"
+required>
+
+
+<button>
+Add Traveler
+</button>
+
+</form>
+
+
+<div id="travelers-list"></div>
+
+
+</section>
+
+
+
+
+
+<!-- Settlement -->
+
+<section>
+
+<h3>Settlement</h3>
+
+<ul id="settlement-list"></ul>
+
+
+</section>
+
+
+</div>
+
+
+
+</body>
+
+</html>

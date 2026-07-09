@@ -1,176 +1,1219 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, remove, set } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-database.js";
 
-// Firebase configuration
+import {
+  getDatabase,
+  ref,
+  push,
+  onValue,
+  remove,
+  set
+} from "https://www.gstatic.com/firebasejs/9.20.0/firebase-database.js";
+
+
+
+// ===============================
+// Firebase Configuration
+// ===============================
+
+
 const firebaseConfig = {
-  databaseURL: "https://roadwallet-73e92-default-rtdb.firebaseio.com"
+
+  databaseURL:
+  "https://roadwallet-73e92-default-rtdb.firebaseio.com"
+
 };
 
-// Initialize Firebase App and Database Reference
+
+
 const app = initializeApp(firebaseConfig);
+
 const database = getDatabase(app);
-const expensesRef = ref(database, "expenses"); // Reference to expenses in the database
-const travelersRef = ref(database, "travelers"); // Reference to travelers in the database
 
-// Retrieve necessary elements for manipulation
-const expenseForm = document.getElementById("expense-form");
-const totalExpensesAmountElement = document.getElementById("total-expenses-amount");
-const expenseList = document.getElementById("expense-list");
-const modal = document.getElementById("travelers-modal");
-const openModalButton = document.getElementById("open-modal-button");
-const closeButton = document.querySelector(".close-button");
-const travelersForm = document.getElementById("travelers-form");
-const travelerNameInput = document.getElementById("traveler-name");
-const travelersList = document.getElementById("travelers-list");
 
-// Initialize arrays to store expense and traveler data
+
+const expensesRef =
+ref(database, "expenses");
+
+
+const travelersRef =
+ref(database, "travelers");
+
+
+
+
+// ===============================
+// HTML Elements
+// ===============================
+
+
+const expenseForm =
+document.getElementById("expense-form");
+
+
+const expenseCategory =
+document.getElementById("expense-category");
+
+
+const expenseAmount =
+document.getElementById("expense-amount");
+
+
+const expensePayer =
+document.getElementById("expense-payer");
+
+
+const expenseList =
+document.getElementById("expense-list");
+
+
+const totalExpensesAmountElement =
+document.getElementById("total-expenses-amount");
+
+
+
+const travelersForm =
+document.getElementById("travelers-form");
+
+
+const travelerNameInput =
+document.getElementById("traveler-name");
+
+
+const travelersList =
+document.getElementById("travelers-list");
+
+
+
+const summaryBody =
+document.getElementById("summary-body");
+
+
+
+const settlementList =
+document.getElementById("settlement-list");
+
+
+
+
+// Modal
+
+const modal =
+document.getElementById("travelers-modal");
+
+
+const openModalButton =
+document.getElementById("open-modal-button");
+
+
+const closeButton =
+document.querySelector(".close-button");
+
+
+
+
+
+
+// ===============================
+// Data
+// ===============================
+
+
 let expenses = [];
+
 let travelers = [];
 
-// Event listener to show the modal when the button is clicked
-openModalButton.addEventListener("click", function () {
-  modal.classList.add("display-modal");
-});
 
-// Event listener to hide the modal when the close button is clicked
-closeButton.addEventListener("click", function () {
-  modal.classList.remove("display-modal");
-});
 
-// Event listener to close the modal if clicked outside of it
-window.addEventListener("click", function (event) {
-  if (event.target === modal) {
-    modal.classList.remove("display-modal");
+
+
+
+// ===============================
+// Modal Controls
+// ===============================
+
+
+openModalButton.onclick = () => {
+
+  modal.classList.add(
+    "display-modal"
+  );
+
+};
+
+
+
+closeButton.onclick = () => {
+
+  modal.classList.remove(
+    "display-modal"
+  );
+
+};
+
+
+
+window.onclick = (event)=>{
+
+  if(event.target === modal){
+
+    modal.classList.remove(
+      "display-modal"
+    );
+
   }
+
+};
+
+
+
+
+
+
+
+
+// ===============================
+// Form Events
+// ===============================
+
+
+expenseForm.addEventListener(
+"submit",
+(event)=>{
+
+event.preventDefault();
+
+addExpense();
+
 });
 
-// Handle form submission for expenses
-expenseForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-  handleNewExpense();
+
+
+
+
+travelersForm.addEventListener(
+"submit",
+(event)=>{
+
+event.preventDefault();
+
+addTraveler();
+
 });
 
-// Handle form submission for adding a new traveler
-travelersForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-  handleNewTraveler();
+
+
+
+
+
+
+// ===============================
+// Add Traveler
+// ===============================
+
+
+function addTraveler(){
+
+
+const name =
+travelerNameInput.value.trim();
+
+
+
+if(!name)
+return;
+
+
+
+const newTraveler =
+push(travelersRef);
+
+
+
+set(
+newTraveler,
+{
+
+name:name
+
+}
+
+);
+
+
+
+travelerNameInput.value="";
+
+
+}
+
+
+
+
+
+
+
+// ===============================
+// Add Expense
+// ===============================
+
+
+function addExpense(){
+
+
+const amount =
+Number(
+expenseAmount.value
+);
+
+
+
+const category =
+expenseCategory.value;
+
+
+
+const paidBy =
+expensePayer.value;
+
+
+
+if(!paidBy){
+
+alert(
+"Please select who paid."
+);
+
+return;
+
+}
+
+
+
+const newExpense =
+push(expensesRef);
+
+
+
+set(
+newExpense,
+{
+
+category,
+
+amount,
+
+paidBy
+
+}
+
+);
+
+
+
+expenseForm.reset();
+
+
+}
+
+
+
+
+
+
+
+
+// ===============================
+// Firebase Listeners
+// ===============================
+
+
+onValue(
+expensesRef,
+(snapshot)=>{
+
+
+expenses=[];
+
+
+snapshot.forEach(
+(child)=>{
+
+
+expenses.push({
+
+id:child.key,
+
+...child.val()
+
 });
 
-// Function to process a new expense entry and save to Firebase
-function handleNewExpense() {
-  const category = document.getElementById("expense-category").value;
-  const amount = parseInt(document.getElementById("expense-amount").value);
-  const newExpenseRef = push(expensesRef);
-  set(newExpenseRef, { category, amount }); // Save new expense to Firebase
-  expenseForm.reset();
-}
 
-// Function to process adding a new traveler and save to Firebase
-function handleNewTraveler() {
-  const travelerName = travelerNameInput.value.trim();
-  if (travelerName !== "") {
-    const newTravelerRef = push(travelersRef);
-    set(newTravelerRef, { name: travelerName }); // Save new traveler to Firebase
-    travelerNameInput.value = "";
-  }
-}
-
-// Function to remove an expense from Firebase
-function deleteExpense(expenseId) {
-  remove(ref(database, `expenses/${expenseId}`)); // Remove the expense from Firebase
-}
-
-// Function to remove a traveler from Firebase
-function removeTraveler(travelerId) {
-  remove(ref(database, `travelers/${travelerId}`)); // Remove the traveler from Firebase
-}
-
-// Real-time listener for expenses
-onValue(expensesRef, (snapshot) => {
-  expenses = [];
-  snapshot.forEach((childSnapshot) => {
-    const expense = childSnapshot.val();
-    expense.id = childSnapshot.key; // Store Firebase key as id in expense object
-    expenses.push(expense);
-  });
-  updateDisplays();
 });
 
-// Real-time listener for travelers
-onValue(travelersRef, (snapshot) => {
-  travelers = [];
-  snapshot.forEach((childSnapshot) => {
-    const traveler = childSnapshot.val();
-    traveler.id = childSnapshot.key; // Store Firebase key as id in traveler object
-    travelers.push(traveler);
-  });
-  updateDisplays();
+
+
+refresh();
+
+
 });
 
-// Function to update all relevant displays (expenses and travelers)
-function updateDisplays() {
-  calculateAmountOwed();
-  updateTotalExpensesAmount();
-  updateExpenseList();
-  updateTravelersList();
+
+
+
+
+
+
+onValue(
+travelersRef,
+(snapshot)=>{
+
+
+travelers=[];
+
+
+snapshot.forEach(
+(child)=>{
+
+
+travelers.push({
+
+id:child.key,
+
+...child.val()
+
+});
+
+
+});
+
+
+
+refresh();
+
+
+});
+
+
+
+
+
+
+
+
+
+
+// ===============================
+// Refresh Everything
+// ===============================
+
+
+function refresh(){
+
+
+updateTotalExpenses();
+
+
+updateExpenseHistory();
+
+
+updatePayerDropdown();
+
+
+calculateBalances();
+
+
 }
 
-// Calculate the amount each traveler owes and update their record
-function calculateAmountOwed() {
-  if (travelers.length === 0) return;
-  const totalExpense = expenses.reduce((sum, expense) => sum + expense.amount, 0);
-  const amountPerTraveler = (totalExpense / travelers.length).toFixed(2);
-  travelers.forEach(traveler => traveler.amountOwed = amountPerTraveler);
+
+
+
+
+
+
+
+
+// ===============================
+// Total Expense
+// ===============================
+
+
+function updateTotalExpenses(){
+
+
+const total =
+expenses.reduce(
+(sum,item)=>
+sum + Number(item.amount || 0),
+0
+);
+
+
+
+totalExpensesAmountElement.textContent =
+
+"$" + total.toFixed(2);
+
+
 }
 
-// Update the total expenses display
-function updateTotalExpensesAmount() {
-  const totalExpense = expenses.reduce((sum, expense) => sum + expense.amount, 0);
-  totalExpensesAmountElement.textContent = "$" + totalExpense;
+
+
+
+
+
+
+
+// ===============================
+// Expense History
+// ===============================
+
+
+function updateExpenseHistory(){
+
+
+expenseList.innerHTML="";
+
+
+
+expenses.forEach(
+(expense)=>{
+
+
+const li =
+document.createElement("li");
+
+
+
+li.innerHTML = `
+
+<div>
+
+<strong>
+${expense.category}
+</strong>
+
+<br>
+
+$${Number(expense.amount).toFixed(2)}
+
+<br>
+
+Paid by:
+${expense.paidBy || "Unknown"}
+
+</div>
+
+`;
+
+
+
+li.appendChild(
+createDeleteButton(
+expense.id,
+deleteExpense
+)
+);
+
+
+
+expenseList.appendChild(li);
+
+
+
+});
+
+
 }
 
-// Refresh the list of expenses on the page
-function updateExpenseList() {
-  expenseList.innerHTML = "";
-  expenses.forEach(function (expense) {
-    addExpenseToList(expense);
-  });
+
+
+
+
+
+
+
+// ===============================
+// Payer Dropdown
+// ===============================
+
+
+function updatePayerDropdown(){
+
+
+expensePayer.innerHTML =
+
+`
+<option value="">
+Select traveler
+</option>
+`;
+
+
+
+travelers.forEach(
+(person)=>{
+
+
+const option =
+document.createElement("option");
+
+
+option.value =
+person.name;
+
+
+option.textContent =
+person.name;
+
+
+
+expensePayer.appendChild(option);
+
+
+
+});
+
+
 }
 
-// Add a single expense item to the list
-function addExpenseToList(expense) {
-  const expenseItem = document.createElement("li");
-  expenseItem.textContent = expense.category + ": $" + expense.amount;
-  const deleteIcon = createDeleteButton(expense.id, deleteExpense);
-  expenseItem.appendChild(deleteIcon);
-  expenseList.appendChild(expenseItem);
+
+
+
+
+
+
+
+// ===============================
+// Balance Calculation
+// ===============================
+
+
+function calculateBalances(){
+
+
+if(travelers.length === 0){
+
+travelersList.innerHTML="";
+
+summaryBody.innerHTML="";
+
+return;
+
 }
 
-// Refresh the list of travelers on the page
-function updateTravelersList() {
-  travelersList.innerHTML = "";
-  travelers.forEach(function (traveler) {
-    addTravelerToList(traveler);
-  });
+
+
+let balances={};
+
+
+
+travelers.forEach(
+(person)=>{
+
+
+balances[person.name]={
+
+paid:0,
+
+share:0,
+
+balance:0
+
+};
+
+
+});
+
+
+
+
+
+expenses.forEach(
+(expense)=>{
+
+
+if(
+balances[expense.paidBy]
+){
+
+balances[expense.paidBy].paid +=
+
+Number(expense.amount);
+
 }
 
-// Add a single traveler to the list
-function addTravelerToList(traveler) {
-  const travelerItem = document.createElement("div");
-  travelerItem.classList.add("traveler-item");
-  travelerItem.textContent = traveler.name + ": $" + traveler.amountOwed;
-  const removeButton = createDeleteButton(traveler.id, removeTraveler);
-  travelerItem.appendChild(removeButton);
-  travelersList.appendChild(travelerItem);
+
+});
+
+
+
+
+
+const total =
+
+expenses.reduce(
+(sum,item)=>
+sum + Number(item.amount || 0),
+0
+);
+
+
+
+const share =
+
+total / travelers.length;
+
+
+
+
+
+travelers.forEach(
+(person)=>{
+
+
+balances[person.name].share =
+share;
+
+
+
+balances[person.name].balance =
+
+balances[person.name].paid-share;
+
+
+
+});
+
+
+
+
+
+displaySummaryTable(
+balances
+);
+
+
+
+displayBalances(
+balances
+);
+
+
+
+createSettlement(
+balances
+);
+
+
 }
 
-// Helper function to create a delete button for both expenses and travelers
-function createDeleteButton(id, deleteFunction) {
-  const button = document.createElement("button");
-  button.innerHTML = "<i class='fas fa-trash-alt'></i>";
-  button.addEventListener("click", function () {
-    deleteFunction(id);
-  });
-  return button;
+
+
+
+
+
+
+
+
+// ===============================
+// Summary Table
+// ===============================
+
+
+function displaySummaryTable(balances){
+
+
+summaryBody.innerHTML="";
+
+
+
+travelers.forEach(
+(person)=>{
+
+
+const data =
+balances[person.name];
+
+
+
+const row =
+document.createElement("tr");
+
+
+
+let net;
+
+
+
+if(data.balance > 0){
+
+net =
+"+$" + data.balance.toFixed(2);
+
 }
 
+else if(data.balance < 0){
+
+net =
+"-$" + Math.abs(data.balance).toFixed(2);
+
+}
+
+else{
+
+net="$0.00";
+
+}
+
+
+
+
+
+row.innerHTML=
+
+`
+
+<td>
+${person.name}
+</td>
+
+
+<td>
+$${data.paid.toFixed(2)}
+</td>
+
+
+<td>
+$${data.share.toFixed(2)}
+</td>
+
+
+<td>
+${net}
+</td>
+
+`;
+
+
+
+summaryBody.appendChild(row);
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+// ===============================
+// Traveler Balance Cards
+// ===============================
+
+
+function displayBalances(balances){
+
+
+travelersList.innerHTML="";
+
+
+
+travelers.forEach(
+(person)=>{
+
+
+const data =
+balances[person.name];
+
+
+const div =
+document.createElement("div");
+
+
+div.className =
+"traveler-item";
+
+
+
+let status;
+
+
+
+if(data.balance > 0){
+
+status =
+`Receives $${data.balance.toFixed(2)}`;
+
+div.classList.add(
+"receive"
+);
+
+}
+
+
+else if(data.balance < 0){
+
+status =
+`Owes $${Math.abs(data.balance).toFixed(2)}`;
+
+div.classList.add(
+"owe"
+);
+
+}
+
+else{
+
+status="Settled";
+
+}
+
+
+
+
+div.innerHTML=
+
+`
+
+<div>
+
+<strong>
+${person.name}
+</strong>
+
+<br>
+
+Paid:
+$${data.paid.toFixed(2)}
+
+<br>
+
+${status}
+
+</div>
+
+`;
+
+
+
+div.appendChild(
+
+createDeleteButton(
+
+person.id,
+
+deleteTraveler
+
+)
+
+);
+
+
+
+travelersList.appendChild(div);
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+// ===============================
+// Settlement Optimization
+// ===============================
+
+
+function createSettlement(balances){
+
+
+let debtors=[];
+
+let creditors=[];
+
+
+
+Object.keys(balances)
+.forEach(
+(name)=>{
+
+
+const amount =
+
+Number(
+balances[name].balance.toFixed(2)
+);
+
+
+
+if(amount < 0){
+
+debtors.push({
+
+name,
+
+amount:
+Math.abs(amount)
+
+});
+
+}
+
+
+
+if(amount > 0){
+
+creditors.push({
+
+name,
+
+amount
+
+});
+
+}
+
+
+
+});
+
+
+
+
+
+let transactions=[];
+
+
+let d=0;
+
+let c=0;
+
+
+
+while(
+
+d < debtors.length &&
+
+c < creditors.length
+
+){
+
+
+
+const payment =
+
+Math.min(
+
+debtors[d].amount,
+
+creditors[c].amount
+
+);
+
+
+
+
+transactions.push({
+
+from:
+debtors[d].name,
+
+to:
+creditors[c].name,
+
+amount:
+payment
+
+});
+
+
+
+
+debtors[d].amount -= payment;
+
+
+creditors[c].amount -= payment;
+
+
+
+if(debtors[d].amount < .01)
+
+d++;
+
+
+
+if(creditors[c].amount < .01)
+
+c++;
+
+
+
+}
+
+
+
+
+displaySettlement(
+transactions
+);
+
+
+}
+
+
+
+
+
+
+
+// ===============================
+// Settlement Display
+// ===============================
+
+
+function displaySettlement(transactions){
+
+
+settlementList.innerHTML="";
+
+
+
+if(transactions.length===0){
+
+settlementList.innerHTML=
+
+"All expenses are settled.";
+
+return;
+
+}
+
+
+
+transactions.forEach(
+(item)=>{
+
+
+const div =
+document.createElement("div");
+
+
+
+div.className =
+"settlement-item";
+
+
+
+div.textContent =
+
+`${item.from} pays ${item.to} $${item.amount.toFixed(2)}`;
+
+
+
+settlementList.appendChild(div);
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+// ===============================
+// Delete Functions
+// ===============================
+
+
+function deleteExpense(id){
+
+remove(
+
+ref(
+database,
+`expenses/${id}`
+)
+
+);
+
+}
+
+
+
+
+
+function deleteTraveler(id){
+
+remove(
+
+ref(
+database,
+`travelers/${id}`
+)
+
+);
+
+}
+
+
+
+
+
+
+
+
+// ===============================
+// Delete Button
+// ===============================
+
+
+function createDeleteButton(
+id,
+callback
+){
+
+
+const button =
+document.createElement("button");
+
+
+
+button.innerHTML =
+
+"<i class='fas fa-trash-alt'></i>";
+
+
+
+button.addEventListener(
+"click",
+()=>{
+
+callback(id);
+
+}
+
+);
+
+
+
+return button;
+
+
+}

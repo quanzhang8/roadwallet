@@ -1,192 +1,973 @@
-body {
-  font-family: 'Inter', Arial, sans-serif;
-  background-color: #FFF7ED;
-  margin: 0;
-  padding: 0;
+/* =========================
+   Global Reset
+========================= */
+
+* {
+  box-sizing: border-box;
 }
+
+
+html,
+body {
+
+  min-width: 320px;
+
+  margin:0;
+
+  padding:0;
+
+}
+
+
+body {
+
+  font-family:'Inter', Arial, sans-serif;
+
+  background:#FFF7ED;
+
+  color:#161616;
+
+  overflow-x:hidden;
+
+}
+
+
+
+
+/* =========================
+   Main Container
+========================= */
+
 
 .container {
-  width: 90%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+
+  width:min(94%,900px);
+
+  margin:auto;
+
+  padding:
+  clamp(10px,2vw,30px);
+
 }
+
+
+
+
+
+/* =========================
+   Headings
+========================= */
+
 
 h1 {
-  font-size: 36px;
-  color: #161616;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 0 26px;
+
+  font-size:
+  clamp(24px,4vw,38px);
+
+  text-align:center;
+
+  margin-bottom:20px;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  gap:8px;
+
 }
 
-h1 .fas {
-    font-size: 28px;
+
+
+h1 i {
+
+  color:#115E59;
+
 }
+
+
+
+h2 {
+
+  font-size:
+  clamp(16px,2.5vw,24px);
+
+}
+
+
 
 .heading-total {
-  text-align: center;
+
+  text-align:center;
+
+  font-size:
+  clamp(16px,3vw,22px);
+
 }
+
+
+
+#total-expenses-amount {
+
+  font-weight:700;
+
+}
+
+
+
+
+
+
+
+/* =========================
+   Forms
+========================= */
+
 
 form {
-  margin-bottom: 20px;
+
+  background:white;
+
+  padding:
+  clamp(12px,3vw,25px);
+
+
+  border-radius:
+  clamp(8px,2vw,14px);
+
+
+  box-shadow:
+
+  0 4px 12px rgba(0,0,0,.08);
+
 }
+
+
+
 
 label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 10px;
+
+  display:block;
+
+  margin-bottom:6px;
+
+  font-weight:600;
+
+  font-size:
+  clamp(13px,2vw,16px);
+
 }
 
-select,
-input[type="number"],
-input[type="text"],
-button[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: #fff;
-  color: #161616;
-  box-sizing: border-box;
+
+
+
+
+input,
+select {
+
+
+  width:100%;
+
+
+  height:
+  clamp(34px,5vw,46px);
+
+
+  padding:
+  clamp(7px,1.5vw,12px);
+
+
+  margin-bottom:12px;
+
+
+  border:
+
+  1px solid #ccc;
+
+
+  border-radius:
+
+  clamp(5px,1vw,8px);
+
+
+  font-size:
+
+  clamp(13px,2vw,16px);
+
+
+  background:white;
+
+
 }
 
-button[type="submit"] {
-  background-color: #115E59;
-  color: #fff;
-  cursor: pointer;
+
+
+
+
+
+
+/* =========================
+   Buttons
+========================= */
+
+
+button {
+
+
+  min-height:
+
+  clamp(32px,5vw,44px);
+
+
+  padding:
+
+  clamp(6px,1.5vw,12px)
+
+  clamp(10px,2vw,16px);
+
+
+  border:none;
+
+
+  border-radius:
+
+  clamp(5px,1vw,8px);
+
+
+  cursor:pointer;
+
+
+  font-size:
+
+  clamp(12px,2vw,16px);
+
+
 }
 
-.fas {
-  display: inline;
-  margin-right: 5px;
+
+
+
+button:hover {
+
+  opacity:.85;
+
 }
+
+
+
+button[type="submit"],
+
+#open-modal-button {
+
+
+  width:100%;
+
+
+  background:#115E59;
+
+
+  color:white;
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   Divider
+========================= */
+
 
 hr {
-  border: none;
-  border-top: 1px solid #ccc;
-  margin: 20px 0;
+
+  border:none;
+
+  border-top:
+
+  1px solid #ddd;
+
+
+  margin:
+
+  clamp(15px,3vw,30px)
+
+  0;
+
 }
+
+
+
+
+
+
+
+/* =========================
+   Expense History
+========================= */
+
 
 ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+
+  list-style:none;
+
+  padding:0;
+
 }
 
-li, .traveler-item {
-  padding: 12px 0;
-  text-transform: capitalize;
-  border-bottom: 1px solid #ccc;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+
+
+li {
+
+
+  background:white;
+
+
+  margin-bottom:12px;
+
+
+  padding:
+
+  clamp(10px,2vw,16px);
+
+
+  border-radius:
+
+  clamp(8px,1.5vw,12px);
+
+
+  display:flex;
+
+
+  justify-content:space-between;
+
+
+  align-items:center;
+
+
+  gap:12px;
+
+
+  font-size:
+
+  clamp(13px,2vw,16px);
+
+
+  box-shadow:
+
+  0 3px 10px rgba(0,0,0,.08);
+
+
 }
 
-li:last-child, .traveler-item:last-child {
-    border-bottom: none;
+
+
+li button {
+
+
+  background:#FF8C38;
+
+
+  color:white;
+
+
+  flex-shrink:0;
+
+
 }
 
-#expense-list li button, .traveler-item button {
-  background-color: #FF8C38;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  padding: 5px 8px;
-  border-radius: 4px;
-}
 
-button .fas {
-  margin: 0;
-}
 
-/* Modal styles */
+
+
+
+
+
+/* =========================
+   Modal
+========================= */
+
+
 .modal {
-  box-sizing: border-box;
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  padding: 0 10px;
-  background-color: rgba(0, 0, 0, 0.55);
+
+
+  display:none;
+
+
+  position:fixed;
+
+
+  inset:0;
+
+
+  background:
+
+  rgba(0,0,0,.55);
+
+
+  padding:15px;
+
+
 }
+
+
+
 
 .display-modal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+
+  display:flex;
+
+
+  justify-content:center;
+
+
+  align-items:center;
+
+
 }
+
+
+
 
 .modal-content {
-  background-color: #fff;
-  margin: 15% auto;
-  padding: 20px;
-  border-radius: 4px;
-  max-width: 400px;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
-  position: relative;
+
+
+  width:min(100%,450px);
+
+
+  max-height:90vh;
+
+
+  overflow-y:auto;
+
+
+  background:white;
+
+
+  padding:
+
+  clamp(15px,3vw,25px);
+
+
+  border-radius:
+
+  clamp(8px,2vw,15px);
+
+
+  position:relative;
+
+
 }
+
+
+
 
 .close-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px;
-  cursor: pointer;
+
+
+  position:absolute;
+
+
+  right:15px;
+
+
+  top:8px;
+
+
+  font-size:28px;
+
+
+  cursor:pointer;
+
+
 }
 
-/* Styles for the "Open Travelers" button */
-#open-modal-button {
-  background-color: #115E59;
-  display: block;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  margin: 0 auto 28px;
-  cursor: pointer;
-  border-radius: 4px;
-}
 
-#open-modal-button:hover, button:hover {
-    background-color: #238b84;
-}
 
-/* Styles for the Total Expenses Amount */
-#total-expenses-amount {
-  font-size: 20px;
-  font-weight: initial;
-}
 
-.modal-content {
-  background-color: #fff;
-  margin: 15% auto;
-  padding: 20px;
-  border-radius: 4px;
-  max-width: 400px;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
-  position: relative;
-}
 
-.close-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px;
-  cursor: pointer;
-}
 
-#travelers-form h2 {
-  margin-top: 0;
-}
+
+
+
+/* =========================
+   Traveler Balance Cards
+========================= */
+
 
 #travelers-list {
-  padding: 0;
-  margin: 0;
-  list-style: none;
+
+
+  display:flex;
+
+
+  flex-direction:column;
+
+
+  gap:12px;
+
+
+}
+
+
+
+
+
+.traveler-item {
+
+
+  background:white;
+
+
+  padding:
+
+  clamp(10px,2vw,16px);
+
+
+  border-radius:
+
+  clamp(8px,1.5vw,12px);
+
+
+  display:flex;
+
+
+  justify-content:space-between;
+
+
+  align-items:center;
+
+
+  gap:12px;
+
+
+  flex-wrap:wrap;
+
+
+  box-shadow:
+
+  0 3px 10px rgba(0,0,0,.08);
+
+
+  font-size:
+
+  clamp(13px,2vw,16px);
+
+
+}
+
+
+
+.traveler-item button {
+
+
+  background:#FF8C38;
+
+
+  color:white;
+
+
+}
+
+
+
+.receive {
+
+
+  border-left:
+
+  6px solid #16a34a;
+
+
+}
+
+
+
+.owe {
+
+
+  border-left:
+
+  6px solid #dc2626;
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   Summary Table
+========================= */
+
+
+.summary-table-container {
+
+
+  width:100%;
+
+
+  overflow-x:auto;
+
+
+}
+
+
+
+
+
+#expense-summary {
+
+
+  width:100%;
+
+
+  border-collapse:collapse;
+
+
+  background:white;
+
+
+  border-radius:12px;
+
+
+  overflow:hidden;
+
+
+  box-shadow:
+
+  0 3px 10px rgba(0,0,0,.08);
+
+
+}
+
+
+
+
+#expense-summary th {
+
+
+  background:#115E59;
+
+
+  color:white;
+
+
+  text-align:left;
+
+
+  padding:12px;
+
+
+  font-size:
+
+  clamp(12px,2vw,15px);
+
+
+}
+
+
+
+
+#expense-summary td {
+
+
+  padding:12px;
+
+
+  border-bottom:
+
+  1px solid #eee;
+
+
+  font-size:
+
+  clamp(12px,2vw,15px);
+
+
+}
+
+
+
+
+#expense-summary tr:last-child td {
+
+
+  border-bottom:none;
+
+
+}
+
+
+
+
+
+#expense-summary td:last-child {
+
+
+  font-weight:700;
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   Settlement
+========================= */
+
+
+#settlement-list {
+
+
+  display:flex;
+
+
+  flex-direction:column;
+
+
+  gap:10px;
+
+
+}
+
+
+
+
+.settlement-item {
+
+
+  background:white;
+
+
+  padding:
+
+  clamp(10px,2vw,16px);
+
+
+  border-radius:
+
+  clamp(8px,1.5vw,12px);
+
+
+  font-weight:600;
+
+
+  font-size:
+
+  clamp(13px,2vw,16px);
+
+
+  box-shadow:
+
+  0 3px 10px rgba(0,0,0,.08);
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   Tablet
+========================= */
+
+
+@media(max-width:768px){
+
+
+.container {
+
+  width:96%;
+
+}
+
+
+
+li {
+
+  flex-direction:column;
+
+  align-items:flex-start;
+
+}
+
+
+li button {
+
+  align-self:flex-end;
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   Mobile
+========================= */
+
+
+@media(max-width:480px){
+
+
+.container {
+
+
+  width:100%;
+
+
+  padding:10px;
+
+
+}
+
+
+
+h1 {
+
+
+  font-size:24px;
+
+
+}
+
+
+
+form {
+
+
+  padding:12px;
+
+
+}
+
+
+
+.traveler-item {
+
+
+  flex-direction:column;
+
+
+  align-items:flex-start;
+
+
+}
+
+
+
+.traveler-item button {
+
+
+  align-self:flex-end;
+
+
+}
+
+
+
+li,
+.settlement-item {
+
+
+  font-size:13px;
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   Very Small Screens
+========================= */
+
+
+@media(max-width:350px){
+
+
+
+h1 {
+
+  font-size:22px;
+
+}
+
+
+
+h2 {
+
+  font-size:15px;
+
+}
+
+
+
+input,
+select {
+
+  height:32px;
+
+  font-size:12px;
+
+}
+
+
+
+button {
+
+  font-size:12px;
+
+}
+
+
+
+li,
+.traveler-item,
+.settlement-item {
+
+
+  padding:8px;
+
+
+  font-size:12px;
+
+
+}
+
+
 }
